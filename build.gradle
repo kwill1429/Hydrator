@@ -1,0 +1,20 @@
+group 'Qwyll'
+version '1.0'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+
+dependencies {
+    compile files(epicbotJarLoc, apiJarLoc)
+}
+task cleanScript(type: Delete) {
+    delete scriptDir
+}
+task compileScript(dependsOn: 'cleanScript', type: JavaCompile) {
+    classpath = files(epicbotJarLoc, apiJarLoc)
+    source = fileTree(dir: hydratorDir, include: ['**/*.java'], excludes: ['definitions'])
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
+    destinationDir = file(scriptDir)
+}
