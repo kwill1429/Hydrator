@@ -1,6 +1,10 @@
 package references;
 
-import java.util.Date;
+import com.epicbot.api.rs3.methods.tab.inventory.Inventory;
+import com.epicbot.api.rs3.wrappers.node.Item;
+import com.epicbot.api.util.filters.IdFilter;
+import com.epicbot.api.util.prices.rs3.GrandExchange;
+
 import java.util.Random;
 
 /**
@@ -9,10 +13,20 @@ import java.util.Random;
 public class Global_Variable
 {
 
-    public static Date startTime;
+    public static long startTime;
     public static int startExp;
     public static int spellCasts;
-    public static boolean cantHydrate = false;
-    public static boolean cantBank = false;
+    public static int itemsMade;
     public static Random randomNumber;
+    public static boolean justBanked;
+    public static boolean done;
+    public static int moneyEarned;
+    public static boolean spellCasted;
+    public static String state;
+
+    public static long timeRunning;
+
+    public static int marketPriceAstral;
+    public static int marketPriceClay;
+    public static int marketPriceSoftClay;
 }

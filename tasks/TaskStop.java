@@ -3,9 +3,9 @@ package tasks;
 import com.epicbot.api.concurrent.Task;
 import com.epicbot.api.concurrent.node.Node;
 import com.epicbot.api.rs3.methods.Environment;
-import com.epicbot.api.rs3.methods.Game;
-import com.epicbot.api.rs3.methods.Widgets;
-import com.epicbot.api.util.Time;
+import com.epicbot.api.rs3.methods.tab.inventory.Inventory;
+import com.epicbot.api.rs3.wrappers.node.Item;
+import com.epicbot.api.util.filters.IdFilter;
 import references.Global_Variable;
 
 /**
@@ -17,16 +17,13 @@ public class TaskStop extends Node implements Task
     @Override
     public void run()
     {
-        System.out.println("Out of resources. Must stop.");
-//        Widgets.getChild(93782082).interact("Open Settings");
-        Widgets.getChild(93782082).click(true);
-        Widgets.getChild(93913163).interact("Select");
+        Global_Variable.state = "Out of resources. Must stop.";
         Environment.getActiveScript().stop();
     }
 
     @Override
     public boolean shouldExecute()
     {
-        return (Global_Variable.cantHydrate && Global_Variable.cantBank) ? true : true;
+        return Global_Variable.done || Global_Variable.timeRunning > (2800000+Global_Variable.randomNumber.nextInt(1800000));
     }
 }

@@ -9,9 +9,6 @@ import com.epicbot.api.rs3.methods.widget.Camera;
 import com.epicbot.api.util.Time;
 import references.Global_Variable;
 
-import java.util.HashMap;
-import java.util.Random;
-
 /**
  * Created by Qwyll on 5/26/2015.
  */
@@ -21,27 +18,31 @@ public class TaskAntiban extends Node implements Task
     @Override
     public void run()
     {
-        int antibanNumber = (int)(Global_Variable.randomNumber.nextGaussian()*10);
-        if (antibanNumber > 13 && antibanNumber <= 17)//11.05
+        double antibanNumber = (Global_Variable.randomNumber.nextGaussian()*6);
+        if (antibanNumber > 5 && antibanNumber <= 9)//11.05
         {
+            Global_Variable.state = "Moving mouse.";
             moveMouse();
-        } else if (antibanNumber > 17 && antibanNumber <=22)//4.55
+        } else if (antibanNumber > 9 && antibanNumber <=12)//4.55
         {
+            Global_Variable.state = "Moving screen.";
             moveScreen();
-        } else if (antibanNumber > 22 && antibanNumber <= 28)//1.7
+        } else if (antibanNumber > 12 && antibanNumber <= 16)//1.7
         {
+            Global_Variable.state = "Focusing player.";
             focusNearByPlayer();
-        } else if (antibanNumber > 28)//tiny
+        } else if (antibanNumber > 16)//tiny
         {
+            Global_Variable.state = "Checking xp.";
             checkMagicXp();
         }
-        Time.sleep(300, 2000);
+        Time.sleep(100, 600);
     }
 
     @Override
     public boolean shouldExecute()
     {
-        return Players.getLocal() != null;
+        return Players.getLocal() != null && !Global_Variable.state.contains("resting");
     }
 
     private void moveMouse()
