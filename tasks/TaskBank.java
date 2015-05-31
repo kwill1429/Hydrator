@@ -19,7 +19,6 @@ import references.Global_Variable;
  */
 public class TaskBank extends Node implements Task
 {
-    boolean bankClicked=false;
 
     @Override
     public void run()
@@ -44,10 +43,10 @@ public class TaskBank extends Node implements Task
                 Time.sleep(50, 200);
                 Global_Variable.state = "Getting financial data";
                 int prevMake = Inventory.getCount(true, new IdFilter<Item>(true, 1761));
-                Global_Variable.moneyEarned += getProfit(prevMake);
-                Global_Variable.itemsMade += prevMake;
                 Global_Variable.state = "Exchanging items";
                 Keyboard.sendKey('1');
+                Global_Variable.moneyEarned += getProfit(prevMake);
+                Global_Variable.itemsMade += prevMake;
                 Time.sleep(100,150);
             }
         }
