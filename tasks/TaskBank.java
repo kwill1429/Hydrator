@@ -35,21 +35,20 @@ public class TaskBank extends Node implements Task
 
             if (!Bank.isOpen())
             {
-                if (Players.getLocal().getAnimation() != -1)
-                    Time.sleep(600*3,600*5);
-                System.out.println(Bank.open());
+                if (!Bank.open())
+                    Time.sleep(100,300);
             }
 
             if (Bank.isOpen())
             {
-                Time.sleep(50, 300);
+                Time.sleep(50, 200);
                 Global_Variable.state = "Getting financial data";
                 int prevMake = Inventory.getCount(true, new IdFilter<Item>(true, 1761));
                 Global_Variable.moneyEarned += getProfit(prevMake);
                 Global_Variable.itemsMade += prevMake;
                 Global_Variable.state = "Exchanging items";
                 Keyboard.sendKey('1');
-                Time.sleep(100);
+                Time.sleep(100,150);
             }
         }
     }
@@ -57,7 +56,13 @@ public class TaskBank extends Node implements Task
     @Override
     public boolean shouldExecute()
     {
-        return !(Inventory.contains(new IdFilter<Item>(true, 9075)) && Inventory.contains(new IdFilter<Item>(true, 434))) && !Global_Variable.done && !Global_Variable.state.contains("resting");
+        boolean invContainsAstral = Inventory.contains(new IdFilter<Item>(true, 9075));
+        boolean invContainsSoftClay = Inventory.contains(new IdFilter<Item>(true, 1761));
+        boolean scriptResting = Global_Variable.state.contains("resting");
+        return !invContainsAstral &&
+                invContainsSoftClay &&
+                !Global_Variable.done &&
+                !scriptResting;
     }
 
     public int getProfit(int itemsMade)

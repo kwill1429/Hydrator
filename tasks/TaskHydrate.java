@@ -25,14 +25,14 @@ public class TaskHydrate extends Node implements Task
             Global_Variable.state = "Opening\nBackpack";
             Tabs.BACKPACK.open();
         }
-        Time.sleep(50,150);
+        Time.sleep(10,100);
         if (Players.getLocal().getAnimation() == -1)
         {
             Global_Variable.state = "Casting spell";
             Keyboard.sendKey('1');
+            Time.sleep(1900, 1900+200);
             Global_Variable.spellCasts++;
         }
-//        Time.sleep(350, 700);
 
     }
 

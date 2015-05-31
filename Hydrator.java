@@ -41,14 +41,14 @@ public class Hydrator extends ActiveScript implements PaintListener, MessageList
             Global_Variable.state = "Reading";
 
 
-//            taskBank = new TaskBank();
-//            provide(taskBank);
-//            taskHydrate = new TaskHydrate();
-//            provide(taskHydrate);
-//            taskAntiban = new TaskAntiban();
-//            provide(taskAntiban);
-//            taskStop = new TaskStop();
-//            provide(taskStop);
+            taskBank = new TaskBank();
+            provide(taskBank);
+            taskHydrate = new TaskHydrate();
+            provide(taskHydrate);
+            taskAntiban = new TaskAntiban();
+            provide(taskAntiban);
+            taskStop = new TaskStop();
+            provide(taskStop);
             return true;
         } else {
             System.out.println("Missing Level or Spellbook");
@@ -79,20 +79,6 @@ public class Hydrator extends ActiveScript implements PaintListener, MessageList
         {
             utilPaint.init();
             utilPaint.createPaint(graphics2D);
-
-            if (!toggleCast && !Inventory.contains(new IdFilter<Item>(true, 9075)) && Inventory.contains(new IdFilter<Item>(true, 434)))
-            {
-                toggleCast = true;
-                timeStarted = System.currentTimeMillis();
-            } else if (toggleCast && Inventory.contains(new IdFilter<Item>(true, 1761)))
-            {
-                toggleCast = false;
-                item = false;
-                Global_Variable.state = (System.currentTimeMillis()-timeStarted)+"";
-                System.out.println("DoneCasting");
-                timeStarted = 0;
-                Global_Variable.spellCasts++;
-            }
         }
     }
 
