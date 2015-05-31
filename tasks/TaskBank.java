@@ -57,10 +57,9 @@ public class TaskBank extends Node implements Task
     public boolean shouldExecute()
     {
         boolean invContainsAstral = Inventory.contains(new IdFilter<Item>(true, 9075));
-        boolean invContainsSoftClay = Inventory.contains(new IdFilter<Item>(true, 1761));
+        boolean invContainsClay = Inventory.contains(new IdFilter<Item>(true, 434));
         boolean scriptResting = Global_Variable.state.contains("resting");
-        return !invContainsAstral &&
-                invContainsSoftClay &&
+        return (!invContainsAstral || !invContainsClay) &&
                 !Global_Variable.done &&
                 !scriptResting;
     }

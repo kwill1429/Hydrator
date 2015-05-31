@@ -90,7 +90,9 @@ public class Hydrator extends ActiveScript implements PaintListener, MessageList
 
         if( msg.toLowerCase().contains(messageFinished))
         {
-
+            boolean invContainsClay = Inventory.contains(new IdFilter<Item>(true, 434));
+            boolean invContainsAstral = Inventory.contains(new IdFilter<Item>(true, 9075));
+            Global_Variable.done = !invContainsAstral || !invContainsClay;
         }
     }
 }
