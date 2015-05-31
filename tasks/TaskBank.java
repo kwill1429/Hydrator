@@ -60,11 +60,12 @@ public class TaskBank extends Node implements Task
         return !(Inventory.contains(new IdFilter<Item>(true, 9075)) && Inventory.contains(new IdFilter<Item>(true, 434))) && !Global_Variable.done && !Global_Variable.state.contains("resting");
     }
 
-    private int getProfit(int itemsMade)
+    public int getProfit(int itemsMade)
     {
         int cost,gross;
         cost = Global_Variable.marketPriceClay+(Global_Variable.marketPriceAstral/(itemsMade > 0 ? itemsMade : 1));
         gross = Global_Variable.marketPriceSoftClay;
+        System.out.println(cost);
         return (gross-cost)*itemsMade;
     }
 }

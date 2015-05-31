@@ -3,11 +3,9 @@ import com.epicbot.api.GameType;
 import com.epicbot.api.Manifest;
 import com.epicbot.api.rs3.methods.interactive.Players;
 import com.epicbot.api.rs3.methods.tab.Magic;
-import com.epicbot.api.rs3.methods.tab.Skills;
 import com.epicbot.api.rs3.methods.tab.inventory.Inventory;
 import com.epicbot.api.rs3.wrappers.node.Item;
 import com.epicbot.api.util.filters.IdFilter;
-import com.epicbot.api.util.prices.rs3.GrandExchange;
 import com.epicbot.event.events.MessageEvent;
 import com.epicbot.event.listeners.MessageListener;
 import com.epicbot.event.listeners.PaintListener;
@@ -19,9 +17,8 @@ import tasks.TaskStop;
 import utils.UtilPaint;
 
 import java.awt.*;
-import java.util.Random;
 
-@Manifest(name="Hydrator", author="Qwyll", game=GameType.RS3)
+@Manifest(name="Hydrator", author="Qwyll", game=GameType.RS3, version = 1.2)
 public class Hydrator extends ActiveScript implements PaintListener, MessageListener
 {
 
@@ -31,32 +28,27 @@ public class Hydrator extends ActiveScript implements PaintListener, MessageList
     private TaskAntiban taskAntiban;
     private TaskStop taskStop;
     private UtilPaint utilPaint = new UtilPaint();
+    boolean toggleCast = false;
+    boolean item = false;
+    long timeStarted = 0;
 
     @Override
     public boolean onStart() {
         if (Players.getLocal() != null && Magic.canCastSpell(Magic.Spell.HUMIDIFY))
         {
             System.out.println("Starting");
-            Global_Variable.state = "Initializing";
-            Global_Variable.startTime = System.currentTimeMillis();
-            Global_Variable.startExp = Skills.Skill.MAGIC.getExperience();
-            Global_Variable.spellCasts = 0;
-            Global_Variable.itemsMade = 0;
-            Global_Variable.randomNumber = new Random();
-            Global_Variable.done=false;
-            Global_Variable.spellCasted = !Inventory.contains(new IdFilter<Item>(true, 434));
-            Global_Variable.marketPriceAstral = GrandExchange.loadItemInfo(9075).getMarketPrice();
-            Global_Variable.marketPriceClay = GrandExchange.loadItemInfo(434).getMarketPrice();
-            Global_Variable.marketPriceSoftClay = GrandExchange.loadItemInfo(1761).getMarketPrice();
+            Global_Variable.init();
+            Global_Variable.state = "Reading";
 
-            taskBank = new TaskBank();
-            provide(taskBank);
-            taskHydrate = new TaskHydrate();
-            provide(taskHydrate);
-            taskAntiban = new TaskAntiban();
-            provide(taskAntiban);
-            taskStop = new TaskStop();
-            provide(taskStop);
+
+//            taskBank = new TaskBank();
+//            provide(taskBank);
+//            taskHydrate = new TaskHydrate();
+//            provide(taskHydrate);
+//            taskAntiban = new TaskAntiban();
+//            provide(taskAntiban);
+//            taskStop = new TaskStop();
+//            provide(taskStop);
             return true;
         } else {
             System.out.println("Missing Level or Spellbook");
@@ -87,6 +79,20 @@ public class Hydrator extends ActiveScript implements PaintListener, MessageList
         {
             utilPaint.init();
             utilPaint.createPaint(graphics2D);
+
+            if (!toggleCast && !Inventory.contains(new IdFilter<Item>(true, 9075)) && Inventory.contains(new IdFilter<Item>(true, 434)))
+            {
+                toggleCast = true;
+                timeStarted = System.currentTimeMillis();
+            } else if (toggleCast && Inventory.contains(new IdFilter<Item>(true, 1761)))
+            {
+                toggleCast = false;
+                item = false;
+                Global_Variable.state = (System.currentTimeMillis()-timeStarted)+"";
+                System.out.println("DoneCasting");
+                timeStarted = 0;
+                Global_Variable.spellCasts++;
+            }
         }
     }
 
@@ -96,10 +102,9 @@ public class Hydrator extends ActiveScript implements PaintListener, MessageList
         String msg = messageEvent.getMessage();
         String messageFinished = "item could not be found:";
 
-        if( msg.toLowerCase().contains(messageFinished) )
+        if( msg.toLowerCase().contains(messageFinished))
         {
-            Global_Variable.done = !Inventory.contains(new IdFilter<Item>(true, 434)) || !Inventory.contains(new IdFilter<Item>(true, 9075));
-            System.out.println(Global_Variable.done ? "Finished":"");
+
         }
     }
 }

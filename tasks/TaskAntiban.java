@@ -42,7 +42,9 @@ public class TaskAntiban extends Node implements Task
     @Override
     public boolean shouldExecute()
     {
-        return Players.getLocal() != null && !Global_Variable.state.contains("resting");
+        boolean playerExists = Players.getLocal() != null;
+        boolean scriptResting = Global_Variable.state.contains("resting");
+        return playerExists && !scriptResting;
     }
 
     private void moveMouse()

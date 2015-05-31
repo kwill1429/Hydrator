@@ -6,6 +6,7 @@ import com.epicbot.api.rs3.methods.Environment;
 import com.epicbot.api.rs3.methods.tab.inventory.Inventory;
 import com.epicbot.api.rs3.wrappers.node.Item;
 import com.epicbot.api.util.filters.IdFilter;
+import references.Constants;
 import references.Global_Variable;
 
 /**
@@ -24,6 +25,7 @@ public class TaskStop extends Node implements Task
     @Override
     public boolean shouldExecute()
     {
-        return Global_Variable.done || Global_Variable.timeRunning > (2800000+Global_Variable.randomNumber.nextInt(1800000));
+        boolean outOfTime = Global_Variable.timeRunning > (8*Constants.MS_TO_HR + Global_Variable.randomNumber.nextInt(30*Constants.MIN_TO_MS));
+        return Global_Variable.done || outOfTime;
     }
 }

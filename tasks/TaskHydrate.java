@@ -18,15 +18,14 @@ public class TaskHydrate extends Node implements Task
 {
 
     @Override
-    public void run()
+    public void run() //Time 3 Ticks
     {
-        Global_Variable.justBanked = false;
         if (!Tabs.BACKPACK.isOpen())
         {
             Global_Variable.state = "Opening\nBackpack";
             Tabs.BACKPACK.open();
         }
-        Time.sleep(50,300);
+        Time.sleep(50,150);
         if (Players.getLocal().getAnimation() == -1)
         {
             Global_Variable.state = "Casting spell";
@@ -40,7 +39,15 @@ public class TaskHydrate extends Node implements Task
     @Override
     public boolean shouldExecute()
     {
-        return Players.getLocal() != null && Inventory.contains(new IdFilter<Item>(true, 9075)) && Inventory.contains(new IdFilter<Item>(true, 434)) && !Global_Variable.state.contains("resting");
+        boolean invContainsAstral = Inventory.contains(new IdFilter<Item>(true, 9075));
+        boolean invContainsClay = Inventory.contains(new IdFilter<Item>(true, 434));
+        boolean playerExists = Players.getLocal() != null;
+        boolean scriptResting = Global_Variable.state.contains("resting");
+
+        return playerExists &&
+                invContainsAstral &&
+                invContainsClay &&
+                !scriptResting;
     }
 
 
