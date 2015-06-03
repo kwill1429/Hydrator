@@ -18,7 +18,7 @@ public class TaskStop extends Node implements Task
     @Override
     public void run()
     {
-        Global_Variable.state = "Out of resources. Must stop.";
+        Global_Variable.setState("Out of resources. Must stop.");
         Environment.getActiveScript().stop();
     }
 

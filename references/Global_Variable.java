@@ -46,4 +46,10 @@ public class Global_Variable
         Global_Variable.marketPriceClay = GrandExchange.loadItemInfo(434).getMarketPrice();
         Global_Variable.marketPriceSoftClay = GrandExchange.loadItemInfo(1761).getMarketPrice();
     }
+
+    public static void setState(String state)
+    {
+        Global_Variable.state = state;
+        System.out.println(state);
+    }
 }

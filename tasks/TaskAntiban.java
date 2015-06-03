@@ -21,19 +21,19 @@ public class TaskAntiban extends Node implements Task
         double antibanNumber = (Global_Variable.randomNumber.nextGaussian()*6);
         if (antibanNumber > 5 && antibanNumber <= 9)//11.05
         {
-            Global_Variable.state = "Moving mouse.";
+            Global_Variable.setState("Moving mouse.");
             moveMouse();
         } else if (antibanNumber > 9 && antibanNumber <=12)//4.55
         {
-            Global_Variable.state = "Moving screen.";
+            Global_Variable.setState("Moving screen.");
             moveScreen();
         } else if (antibanNumber > 12 && antibanNumber <= 16)//1.7
         {
-            Global_Variable.state = "Focusing player.";
+            Global_Variable.setState("Focusing player.");
             focusNearByPlayer();
         } else if (antibanNumber > 16)//tiny
         {
-            Global_Variable.state = "Checking xp.";
+            Global_Variable.setState("Checking xp.");
             checkMagicXp();
         }
         Time.sleep(100, 600);

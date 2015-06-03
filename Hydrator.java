@@ -95,4 +95,6 @@ public class Hydrator extends ActiveScript implements PaintListener, MessageList
             Global_Variable.done = !invContainsAstral || !invContainsClay;
         }
     }
+
+
 }

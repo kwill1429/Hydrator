@@ -27,10 +27,10 @@ public class TaskBank extends Node implements Task
         {
             if (!NPCs.getNearest(new IdFilter<com.epicbot.api.rs3.wrappers.interactive.NPC>(true, Bank.BANKERS)).isOnScreen())
             {
-                Global_Variable.state = "Looking at banker";
+                Global_Variable.setState("Looking at banker");
                 Camera.turnTo(NPCs.getNearest(new IdFilter<com.epicbot.api.rs3.wrappers.interactive.NPC>(true, Bank.BANKERS)));
             }
-            Global_Variable.state = "Opening bank";
+            Global_Variable.setState("Opening bank");
 
             if (!Bank.isOpen())
             {
@@ -41,9 +41,9 @@ public class TaskBank extends Node implements Task
             if (Bank.isOpen())
             {
                 Time.sleep(50, 200);
-                Global_Variable.state = "Getting financial data";
+                Global_Variable.setState("Getting financial data");
                 int prevMake = Inventory.getCount(true, new IdFilter<Item>(true, 1761));
-                Global_Variable.state = "Exchanging items";
+                Global_Variable.setState("Exchanging items");
                 Keyboard.sendKey('1');
                 Global_Variable.moneyEarned += getProfit(prevMake);
                 Global_Variable.itemsMade += prevMake;
@@ -68,7 +68,6 @@ public class TaskBank extends Node implements Task
         int cost,gross;
         cost = Global_Variable.marketPriceClay+(Global_Variable.marketPriceAstral/(itemsMade > 0 ? itemsMade : 1));
         gross = Global_Variable.marketPriceSoftClay;
-        System.out.println(cost);
         return (gross-cost)*itemsMade;
     }
 }
